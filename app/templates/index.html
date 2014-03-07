@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Scoreboard</title>
+
+</head>
+<body>
+<table border = "15">
+	<tr>NBA Scores  for March 5th Todays Date: </tr>
+	<script language="JavaScript">
+<!--
+	date=Date()
+	document.write(date)
+//-->
+    </script>
+
+	<tr>
+		<td>
+		{% for team in teams %}
+		<p>{{team}}</p>
+		{% endfor %}
+		</td>
+		<td>
+		{% for score in scores %}
+		<p>{{score}}</p>
+		{% endfor %}	
+		</td>
+	</tr>		
+		
+
+</table>
+</body>
+</html>

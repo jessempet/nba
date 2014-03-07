@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Scoreboard</title>
+</head>
+<body>
+<table>
+	<tr>NBA Scores</tr>
+
+	<tr>
+
+		<td bgcolor="#0000CC"><b><font color="white">Blue Team</font></b></td>
+		<td>10</td>
+		
+
+	</tr>
+
+	<tr>
+		<td td bgcolor="#FF0000"><b>Red team</b></td>
+		
+
+		<td>5</td>
+
+	</tr>
+
+</table>
+</body>
+</html>

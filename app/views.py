@@ -1,0 +1,53 @@
+from app import app
+from flask import render_template
+from bs4 import BeautifulSoup as bs
+import urllib
+import urllib
+from collections import OrderedDict
+
+
+nbaTeams = ['Boston','Dallas','Memphis','Brooklyn','Houston','New York','New Orleans','Philadelphia','Toronto','San Antonio','Chicago','Denver','Cleveland','Minnesota','Detroit','Oklahoma City','Indiana','Portland','Milwaukee','Utah','Atlanta','Golden State','Charlotte','L.A. Lakers','Miami','L.A. Clippers','Orlando','Phoenix','Washington','Sacramento']
+
+#Creating the soup to be able to parse through HTML
+def craftSoup(url):
+    html = urllib.urlopen(url)
+    soup = bs(html)
+    return soup
+
+def scrapeScores():
+    # The URL to be scraped; possible automated later
+    url = 'http://www.cbssports.com/nba/scoreboard/20140305'
+    #Instanciating the soup
+    soup = craftSoup(url)
+    numList = []
+
+    #Creating the soup strainer for scraping scores
+    m = soup.find_all("td", {'class':'finalScore'})
+    for entries in m:
+        if entries !=None:
+            numList.append(''.join(c for c in entries if c.isdigit()))
+    return numList
+
+def scrapeTeams():
+    # The URL to be scraped; possible automated later
+    url = 'http://www.cbssports.com/nba/scoreboard/20140305'
+    #Instanciating the soup
+    soup = craftSoup(url)
+    #Creating the soup strainer for scraping the teams playing this week
+    teamsList = []
+    for divs in soup.find_all('div',{'class':'teamLocation'}):
+        for a in divs.find('a'):
+            if a.string in nbaTeams:
+                teamsList.append(a.string)
+    return teamsList
+
+zipped = list(zip(scrapeTeams(),scrapeScores()))
+scoreDict = OrderedDict(zipped)
+
+
+@app.route('/')
+@app.route('/index')
+def index():
+    
+    return render_template("index.html",title = 'Scores',scores = scoreDict.values(), teams = scoreDict.keys())
+
